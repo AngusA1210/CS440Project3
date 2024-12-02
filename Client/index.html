@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS440 Project 1</title>
+</head>
+<body>
+    <h1>Welcome to our online shopping page!</h1>
+    <h1>List Your Item for Sale:</h1>
+    <form id="itemForm">
+        <label for="title">Item Name:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="cost">Cost ($):</label>
+        <input type="number" id="cost" name="cost" step="0.01" required><br><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea><br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+    
+    <h2>Items for Sale</h2>
+    <ul id="itemList"></ul>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  client:
+    build: ./client
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+    depends_on:
+      - item-service
+      - review-service
+
+  item-service:
+    build: ./item-service
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./item-service/database.db:/app/database.db
+    networks:
+      - backend
+
+  review-service:
+    build: ./review-service
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./review-service/database.db:/app/database.db
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
