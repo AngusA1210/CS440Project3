@@ -25,15 +25,59 @@ document.getElementById('itemForm').addEventListener('submit', async function(e)
     }
 });
 
+document.getElementById('reviewForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+	// Get the item ID of the review
+    const itemId = parseInt(document.getElementById('itemId').value, 10);
+
+	// Get the text of the review
+    const reviewText = document.getElementById('reviewText').value;
+
+    const response = await fetch('http://localhost:3000/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId, reviewText }),
+    });
+
+    const result = await response.json();
+    if (result.success) {
+	    // Refresh the list of items and reviews
+        loadItems(); 
+    }
+});
+
 async function loadItems() {
-    const response = await fetch('http://localhost:3000/api/items');
-    const items = await response.json();
+    const itemResponse = await fetch('http://localhost:3000/api/items');
+    const items = await itemResponse.json();
+
+    const reviewResponse = await fetch('http://localhost:3000/api/reviews');
+    const reviews = await reviewResponse.json();
 
     const itemList = document.getElementById('itemList');
     itemList.innerHTML = '';
+
     items.forEach(item => {
         const li = document.createElement('li');
-        li.textContent = `${item.title} - $${item.cost.toFixed(2)}: ${item.description}`;
+        li.innerHTML = `<strong>${item.title}</strong> - $${item.cost.toFixed(2)}: ${item.description}`;
+
+        // Filter reviews for the current item
+        const itemReviews = reviews.filter(review => review.itemId === item.id);
+
+        if (itemReviews.length > 0) {
+            const reviewList = document.createElement('ul');
+            itemReviews.forEach(review => {
+                const reviewLi = document.createElement('li');
+                reviewLi.textContent = `Review: ${review.reviewText}`;
+                reviewList.appendChild(reviewLi);
+            });
+            li.appendChild(reviewList);
+        } else {
+            const noReview = document.createElement('p');
+            noReview.textContent = 'No reviews yet.';
+            li.appendChild(noReview);
+        }
+
         itemList.appendChild(li);
     });
 }
