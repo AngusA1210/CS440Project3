@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS440 Project 1</title>
+    <title>CS440 Project 3</title>
 </head>
 <body>
     <h1>Welcome to our online shopping page!</h1>
+    
     <h1>List Your Item for Sale:</h1>
     <form id="itemForm">
         <label for="title">Item Name:</label>
@@ -18,10 +19,21 @@
         <label for="description">Description:</label>
         <textarea id="description" name="description" required></textarea><br><br>
         
-        <button type="submit">Submit</button>
+        <button type="submit">Submit Item</button>
+    </form>
+
+    <h1>Leave a Review:</h1>
+    <form id="reviewForm">
+        <label for="itemId">Item ID:</label>
+        <input type="number" id="itemId" name="itemId" required><br><br>
+
+        <label for="reviewText">Review:</label>
+        <textarea id="reviewText" name="reviewText" required></textarea><br><br>
+
+        <button type="submit">Submit Review</button>
     </form>
     
-    <h2>Items for Sale</h2>
+    <h2>Items for Sale and Reviews</h2>
     <ul id="itemList"></ul>
 
     <script src="script.js"></script>
